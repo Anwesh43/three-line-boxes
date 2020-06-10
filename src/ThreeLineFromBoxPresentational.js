@@ -20,8 +20,9 @@ const DynamicBox = ({getDynamicStyle}) => {
 
 const ThreeLineFromBoxPresentational = ({w, h, scale, onClick}) => {
     const {getBoxStyle, getDynamicStyle, getLineStyle} = useStyle(w, h, scale)
-    return <div>
-        <FixedBox getBoxStyle = {getBoxStyle}/>
+    console.log(scale)
+    return <div onClick = {onClick}>
+        <FixedBox  getBoxStyle = {getBoxStyle}/>
         {[0, 1, 2].map(i => <Line key = {`line_${i}`} getLineStyle = {getLineStyle} i = {i}/>)}
         <DynamicBox getDynamicStyle = {getDynamicStyle}/>
 

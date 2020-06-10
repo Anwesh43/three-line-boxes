@@ -3,7 +3,7 @@ import {sinify, divideScale} from './utils'
 
 export const useAnimatedScale = (scGap, delay) => {
     const [scale, setScale] = useState(0)
-    const [animated, setAnimated] = useAnimated(false)
+    const [animated, setAnimated] = useState(false)
     return {
         scale,
         start() {
@@ -12,6 +12,7 @@ export const useAnimatedScale = (scGap, delay) => {
                 setAnimated(true)
                 const interval = setInterval(() => {
                     currScale += scGap
+                    setScale(currScale)
                     if (currScale > 1) {
                         setScale(0)
                         setAnimated(false)
@@ -53,7 +54,8 @@ export const useStyle = (w, h, scale) => {
     const fixedColor = '#9E9E9E'
     const lineWidth = boxSize / 15
     const parts = 3
-    const color = '#4CAF50'
+    const color = '#2196F3'
+    const sf = sinify(scale)
     return {
         getBoxStyle() {
             const left = `${x}px`
@@ -72,13 +74,13 @@ export const useStyle = (w, h, scale) => {
             const width = `${lineWidth}px`
             const height = `${y * sfi}px`
             const background = color
-            return {position, }
+            return {position, left, top, width, height, background}
         },
 
         getDynamicStyle() {
-            const boxDynamicSize = `${boxSize * sf}px`
-            const left = `${x - boxDynamicSize / 2}px`
-            const top = `${y - boxDynamicSize / 2}px`
+            const boxDynamicSize = boxSize * sf
+            const left = `${fixedX - boxDynamicSize / 2}px`
+            const top = `${fixedY - boxDynamicSize / 2}px`
             const width = `${boxDynamicSize}px`
             const height = `${boxDynamicSize}px`
             const background = color
